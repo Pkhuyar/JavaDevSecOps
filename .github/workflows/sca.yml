@@ -28,35 +28,40 @@ jobs:
           cache: maven
 
       # --------------------------------------
-      # 1️⃣ OWASP Dependency-Check (Fix Applied)
+      # 1️⃣ OWASP Dependency-Check
       # --------------------------------------
       - name: Run OWASP Dependency-Check
         uses: dependency-check/Dependency-Check_Action@main
         env:
-          JAVA_HOME: /opt/jdk # Fix to ensure correct JAVA_HOME
+          JAVA_HOME: /opt/jdk
         with:
           project: "Java Project"
           path: "."
           format: "HTML"
           out: "dependency-check-report"
 
+      - name: Upload Dependency-Check Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: dependency-check-report
+          path: dependency-check-report/dependency-check-report.html
+
       # --------------------------------------
       # 2️⃣ Trivy Vulnerability Scanner
       # --------------------------------------
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.45.0_Linux-64bit.deb
+          sudo dpkg -i trivy_0.45.0_Linux-64bit.deb
+          trivy --version
+
       - name: Run Trivy Vulnerability Scanner
-        uses: aquasecurity/trivy-action@master
+        run: trivy fs . --format table --output trivy-report.txt || true
+
+      - name: Upload Trivy Report
+        uses: actions/upload-artifact@v3
         with:
-          scan-type: "fs"
-          scan-ref: "."
-          format: "table"
-          exit-code: "0"
-          ignore-unfixed: true
-
-      # --------------------------------------
-      # 📜 Print Reports (Optional)
-      # --------------------------------------
-      - name: Print Dependency-Check Report
-        run: cat dependency-check-report/dependency-check-report.html || true
-
-      - name: Print Trivy Report
-        run: trivy fs . || true
+          name: trivy-report
+          path: trivy-report.txt
