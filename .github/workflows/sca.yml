@@ -7,11 +7,11 @@ on:
 jobs:
   sca:
     strategy:
-      fail-fast: false
+      #fail-fast: false
       matrix:
-        os: [ "ubuntu-20.04" ] # [ "macos-latest", "windows-latest", "ubuntu-20.04" ]
+        os: ["ubuntu-20.04"] # [ "macos-latest", "windows-latest", "ubuntu-20.04" ]
         # Test once with explicit manifest_file, and once without
-        manifest_file: [ "pom.xml" ]
+        manifest_file: ["pom.xml"]
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -35,13 +35,14 @@ jobs:
           github_pat: ${{ github.token }}
           crda: "latest"
 
-      #- name: SCA (CRDA) Scan
-      #  id: crda_scan
-      #  uses: redhat-actions/crda@v1.2
-      #  with:
-      #    manifest_file: ${{ matrix.manifest_file }}
-      #    snyk_token: ${{ secrets.OUR_SNYK_KEY }}
-      #    fail_on: never
+      - name: SCA (CRDA) Scan
+        id: crda_scan
+        uses: redhat-actions/crda@v1.2
+        with:
+          manifest_file: ${{ matrix.manifest_file }}
+          snyk_token: ${{ secrets.YOUR_SNYK_KEY }}
+          #    fail_on: never
+          fail_on: high
 
       - name: Print JSON analysis report
         if: ${{ always() && steps.scan.outputs.crda_report_json }}
