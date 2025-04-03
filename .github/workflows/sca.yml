@@ -28,7 +28,7 @@ jobs:
           cache: maven
 
       # --------------------------------------
-      # 1️⃣ OWASP Dependency-Check (Fix Applied)
+      # 1️⃣ OWASP Dependency-Check
       # --------------------------------------
       - name: Run OWASP Dependency-Check
         uses: dependency-check/Dependency-Check_Action@main
@@ -39,6 +39,13 @@ jobs:
           path: "."
           format: "HTML"
           out: "dependency-check-report"
+
+      # Upload OWASP Dependency-Check Report as Artifact
+      - name: Upload Dependency-Check Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-report
+          path: dependency-check-report/
 
       # --------------------------------------
       # 2️⃣ Trivy Vulnerability Scanner
@@ -51,6 +58,14 @@ jobs:
           format: "table"
           exit-code: "0"
           ignore-unfixed: true
+          output: trivy-report.txt # Save Trivy output to a file
+
+      # Upload Trivy Report as Artifact
+      - name: Upload Trivy Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-report
+          path: trivy-report.txt
 
       # --------------------------------------
       # 📜 Print Reports (Optional)
@@ -59,4 +74,4 @@ jobs:
         run: cat dependency-check-report/dependency-check-report.html || true
 
       - name: Print Trivy Report
-        run: trivy fs . || true
+        run: cat trivy-report.txt || true
