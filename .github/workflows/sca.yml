@@ -53,12 +53,6 @@ jobs:
           ignore-unfixed: true
 
       # --------------------------------------
-      # 3️⃣ WhiteSource Bolt Scan
-      # --------------------------------------
-      - name: Run WhiteSource Bolt Scan
-        uses: whitesource/bolt-action@v1.0.3
-
-      # --------------------------------------
       # 📜 Print Reports (Optional)
       # --------------------------------------
       - name: Print Dependency-Check Report
