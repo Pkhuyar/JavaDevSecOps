@@ -27,22 +27,13 @@ jobs:
           java-version: 11
           cache: maven
 
-      - name: Grant Execute Permissions to Maven Wrapper
-        run: chmod +x ./mvnw
-
-      - name: Test Maven Wrapper
-        run: ./mvnw --version
-
       # --------------------------------------
-      # 2️⃣ OWASP Dependency-Check
+      # 1️⃣ OWASP Dependency-Check (Fix Applied)
       # --------------------------------------
-      - name: Debug Dependency-Check
-        run: |
-          echo "JAVA_HOME is: $JAVA_HOME"
-          java -version
-
       - name: Run OWASP Dependency-Check
         uses: dependency-check/Dependency-Check_Action@main
+        env:
+          JAVA_HOME: /opt/jdk # Fix to ensure correct JAVA_HOME
         with:
           project: "Java Project"
           path: "."
@@ -50,7 +41,7 @@ jobs:
           out: "dependency-check-report"
 
       # --------------------------------------
-      # 3️⃣ Trivy Vulnerability Scanner
+      # 2️⃣ Trivy Vulnerability Scanner
       # --------------------------------------
       - name: Run Trivy Vulnerability Scanner
         uses: aquasecurity/trivy-action@master
@@ -60,6 +51,12 @@ jobs:
           format: "table"
           exit-code: "0"
           ignore-unfixed: true
+
+      # --------------------------------------
+      # 3️⃣ WhiteSource Bolt Scan
+      # --------------------------------------
+      - name: Run WhiteSource Bolt Scan
+        uses: whitesource/bolt-action@v1.0.3
 
       # --------------------------------------
       # 📜 Print Reports (Optional)
