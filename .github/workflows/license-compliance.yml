@@ -25,7 +25,7 @@ jobs:
         uses: jmservera/license-finder-action@main
         continue-on-error: true # Avoid workflow failure on minor issues
         with:
-          permitted-licenses: MIT,Apache-2.0,BSD,EPL1
+          permitted-licenses: MIT,Apache-2.0,BSD #EPL1
           approved-dependencies: |
             hamcrest,hamcrest-core,hamcrest-library
             junit-jupiter,junit-jupiter-api,junit-jupiter-engine,javax.annotation-api
