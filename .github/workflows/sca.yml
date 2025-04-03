@@ -27,6 +27,9 @@ jobs:
           java-version: 11
           cache: maven
 
+      - name: Verify JAVA_HOME
+        run: echo "JAVA_HOME is set to: $JAVA_HOME"
+
       - name: Grant Execute Permissions to Maven Wrapper
         run: chmod +x ./mvnw
 
@@ -37,15 +40,22 @@ jobs:
       # 1️⃣ Snyk Vulnerability Scanner
       # --------------------------------------
       #- name: Run Snyk Security Scan
-      # uses: snyk/actions/maven@master
+      #  uses: snyk/actions/maven@master
       #  with:
       #    args: --severity-threshold=high
       #  env:
       #    SNYK_TOKEN: ${{ secrets.YOUR_SNYK_KEY }}
 
+      
+
       # --------------------------------------
       # 2️⃣ OWASP Dependency-Check
       # --------------------------------------
+      - name: Debug Dependency-Check
+        run: |
+          echo "JAVA_HOME is: $JAVA_HOME"
+          java -version
+
       - name: Run OWASP Dependency-Check
         uses: dependency-check/Dependency-Check_Action@main
         with:
