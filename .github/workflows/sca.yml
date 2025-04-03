@@ -66,12 +66,3 @@ jobs:
         with:
           name: trivy-report
           path: trivy-report.txt
-
-      # --------------------------------------
-      # 📜 Print Reports (Optional)
-      # --------------------------------------
-      - name: Print Dependency-Check Report
-        run: cat dependency-check-report/dependency-check-report.html || true
-
-      - name: Print Trivy Report
-        run: cat trivy-report.txt || true
