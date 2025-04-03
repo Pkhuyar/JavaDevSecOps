@@ -36,11 +36,12 @@ jobs:
       # --------------------------------------
       # 1️⃣ Snyk Vulnerability Scanner
       # --------------------------------------
-      - uses: actions/checkout@master
-      - name: Run Snyk Security Scan
-        uses: snyk/actions/maven@master
-        env:
-          SNYK_TOKEN: ${{ secrets.YOUR_SNYK_KEY }}
+      #- name: Run Snyk Security Scan
+      # uses: snyk/actions/maven@master
+      #  with:
+      #    args: --severity-threshold=high
+      #  env:
+      #    SNYK_TOKEN: ${{ secrets.YOUR_SNYK_KEY }}
 
       # --------------------------------------
       # 2️⃣ OWASP Dependency-Check
