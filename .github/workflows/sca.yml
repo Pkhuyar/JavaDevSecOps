@@ -27,16 +27,12 @@ jobs:
           java-version: 11
           cache: maven
 
-      - name: Verify JAVA_HOME
-        run: echo "JAVA_HOME is set to: $JAVA_HOME"
-
       - name: Grant Execute Permissions to Maven Wrapper
         run: chmod +x ./mvnw
 
       - name: Test Maven Wrapper
         run: ./mvnw --version
 
- 
       # --------------------------------------
       # 2️⃣ OWASP Dependency-Check
       # --------------------------------------
