@@ -36,18 +36,7 @@ jobs:
       - name: Test Maven Wrapper
         run: ./mvnw --version
 
-      # --------------------------------------
-      # 1️⃣ Snyk Vulnerability Scanner
-      # --------------------------------------
-      #- name: Run Snyk Security Scan
-      #  uses: snyk/actions/maven@master
-      #  with:
-      #    args: --severity-threshold=high
-      #  env:
-      #    SNYK_TOKEN: ${{ secrets.YOUR_SNYK_KEY }}
-
-      
-
+ 
       # --------------------------------------
       # 2️⃣ OWASP Dependency-Check
       # --------------------------------------
