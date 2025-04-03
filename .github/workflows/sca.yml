@@ -35,7 +35,7 @@ jobs:
         with:
           args: --severity-threshold=high
         env:
-          SNYK_TOKEN: ${{ secrets.YOUR.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.YOUR.SNYK_KEY }}
 
       # --------------------------------------
       # 2️⃣ OWASP Dependency-Check
